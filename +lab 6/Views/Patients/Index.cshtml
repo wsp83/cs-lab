@@ -1,0 +1,199 @@
+﻿@model IEnumerable<WebApp.Models.Patient>
+
+@{
+    ViewData["Title"] = "Patients";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<h1>Index</h1>
+<p>
+    <a asp-action="Create">Add a new patient</a>
+</p>
+
+<form asp-action="Index" method="get">
+    <div class="form-inline">
+        <input type="text" name="src" value="@ViewData["CurrentFilter"]" class="form-input" palceholder="Search..." />
+        <button type="submit" class="btn btn-primary" style="border: 2px solid #ccc; margin-left: 10px;">Search</button>
+        <a href="/Patients/Index" class="btn btn-secondary" style="margin-left: 10px;">Reset Filter</a>
+    </div>
+</form>
+
+
+<div id="patientTableContainer">
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <h5>Sort by:</h5>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">Name</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["OIBSortParm"]">OIB</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["MBOSortParm"]">MBO</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["AdmDateSortParm"]">Admission Date</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DiscDateSortParm"]">Discharge Date</a>
+            </th>
+        </tr>
+    </thead>
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Oib)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mbo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dob)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AdmissionDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DischargeDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sex)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HasInsurance)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsCheckedIn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Diagnosis)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) 
+        {
+             if (!item.IsCheckedIn)
+             {                   
+             <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Oib)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mbo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dob)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdmissionDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DischargeDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sex)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HasInsurance)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsCheckedIn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Diagnosis)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Discharge</a>
+                </td>
+            </tr>
+           }
+            @if(item.IsCheckedIn)
+                {
+                <tr class="checkedIn" style="display: none;">
+                    <td>
+                                @Html.DisplayFor(modelItem => item.Oib)
+                    </td>
+                    <td>
+                                @Html.DisplayFor(modelItem => item.Mbo)
+                    </td>
+                    <td>
+                                @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                                @Html.DisplayFor(modelItem => item.Dob)
+                    </td>
+                    <td>
+                                @Html.DisplayFor(modelItem => item.AdmissionDate)
+                    </td>
+                    <td>
+                                @Html.DisplayFor(modelItem => item.DischargeDate)
+                    </td>
+                    <td>
+                                @Html.DisplayFor(modelItem => item.Sex)
+                    </td>
+                    <td>
+                                @Html.DisplayFor(modelItem => item.HasInsurance)
+                    </td>
+                    <td>
+                                @Html.DisplayFor(modelItem => item.IsCheckedIn)
+                    </td>
+                    <td>
+                                @Html.DisplayFor(modelItem => item.Diagnosis)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Discharge</a>
+                    </td>
+                </tr>
+                }
+        }
+    </tbody>
+</table>
+</div>
+<label class="switch">
+    <input id="toggleCheckedIn" type="checkbox" />
+    <b>Show checked in patients</b>
+</label>
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#toggleCheckedIn").on("change", function () {
+            $(".checkedIn").toggle(this.checked);
+        });
+    });
+
+    let check = document.getElementById('toggleCheckedIn');
+
+    check.addEventListener('change', e => {
+        if (e.target.checked === true) {
+            console.log("Checkbox is checked - boolean value: ", e.target.checked)
+        }
+        if (e.target.checked === false) {
+            console.log("Checkbox is not checked - boolean value: ", e.target.checked)
+        }
+    });
+</script>
+
+
+
+
+
+

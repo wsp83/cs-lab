@@ -1,0 +1,77 @@
+﻿@model WebApp.Models.Patient
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+<h4>Patient</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="form-span"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-div">
+                <label asp-for="Oib" class="form-label"></label>
+                <input asp-for="Oib" class="form-input" />
+                <span asp-validation-for="Oib" class="form-span"></span>
+            </div>
+            <div class="form-div">
+                <label asp-for="Mbo" class="form-label"></label>
+                <input asp-for="Mbo" class="form-input" />
+                <span asp-validation-for="Mbo" class="form-span"></span>
+            </div>
+            <div class="form-div">
+                <label asp-for="FullName" class="form-label"></label>
+                <input asp-for="FullName" class="form-input" />
+                <span asp-validation-for="FullName" class="form-span"></span>
+            </div>
+            <div class="form-div">
+                <label asp-for="Dob" class="form-label"></label>
+                <input asp-for="Dob" class="form-input" />
+                <span asp-validation-for="Dob" class="form-span"></span>
+            </div>
+            <div class="form-div">
+                <label asp-for="AdmissionDate" class="form-label"></label>
+                <input asp-for="AdmissionDate" class="form-input" />
+                <span asp-validation-for="AdmissionDate" class="form-span"></span>
+            </div>
+            <div class="form-div">
+                <label asp-for="DischargeDate" class="form-label"></label>
+                <input asp-for="DischargeDate" class="form-input" />
+                <span asp-validation-for="DischargeDate" class="form-span"></span>
+            </div>
+            <div class="form-div">
+                <label asp-for="Sex" class="form-label"></label>
+                <input asp-for="Sex" class="form-input" />
+                <span asp-validation-for="Sex" class="form-span"></span>
+            </div>
+            <div class="form-div form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="HasInsurance" /> @Html.DisplayNameFor(model => model.HasInsurance)
+                </label>
+            </div>
+            <div class="form-div form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsCheckedIn" /> @Html.DisplayNameFor(model => model.IsCheckedIn)
+                </label>
+            </div>
+            <div class="form-div">
+                <label asp-for="Diagnosis" class="form-label"></label>
+                <input asp-for="Diagnosis" class="form-input" />
+                <span asp-validation-for="Diagnosis" class="form-span"></span>
+            </div>
+            <div class="form-div">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
